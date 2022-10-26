@@ -1,0 +1,45 @@
+import wollok.game.*
+import ball.*
+import pad.*
+import Alien.*
+import manager.*
+
+program Game {
+	// Seteo inicial de atributos del tablero del juego
+	game.title("BreackOut")
+	game.width(23)
+	game.height(27)
+	game.cellSize(25)
+	game.boardGround("black_background.png")
+	// Creo la bola
+	var ball1 = new Ball()
+		ball1.drawBall()
+	// llenar y dibujar el pad	
+	pad.fillTileMap()
+	pad.drawPad()
+	
+	//Creo el Alien y manejo su movimiento en un lapso de tiempo
+	gameManager.fillAlienListA(5)
+	gameManager.drawAlienListA()
+	game.onTick(1000, "alien update", {
+		gameManager.changeFrameAlien()        // Cambio de frame de los Aliens
+		gameManager.moveHorizontal()		  // Muevo los Alien de forma horizontal
+		if(gameManager.CollisionWidth()){	  // Chequeo colision con bordes
+			gameManager.moveDown()			  // Muevo los aliens hacia abajo cuando choca
+			gameManager.changeDirection()	  // Cambio de direccion de los Aliens
+		}
+	})		
+	// Manejo de teclas
+	keyboard.left().onPressDo({pad.MoveLeft() if(pad.CollisionWidth()) pad.MoveRight()})	
+	keyboard.right().onPressDo({pad.MoveRight() if(pad.CollisionWidth()) pad.MoveLeft()})			
+	// Game Update	Muevo bola en un lapso de tiempo
+	game.onTick(150, "game update", {
+		ball1.movement() 						// Muevo bola
+		ball1.CollisionWidthAndHeight() 		// Chequeo colision con bordes 
+		ball1.collideWith(pad)					// Chequeo colision con pad
+		gameManager.collisionAliensWith(ball1)  // Chequeo colision de aliens con Bola
+	})	
+		
+	game.start()
+
+}
