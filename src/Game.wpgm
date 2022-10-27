@@ -5,41 +5,47 @@ import Alien.*
 import manager.*
 
 program Game {
-	// Seteo inicial de atributos del tablero del juego
-	game.title("BreackOut")
-	game.width(23)
-	game.height(27)
-	game.cellSize(25)
-	game.boardGround("black_background.png")
-	// Creo la bola
-	var ball1 = new Ball()
-		ball1.drawBall()
-	// llenar y dibujar el pad	
-	pad.fillTileMap()
-	pad.drawPad()
 	
-	//Creo el Alien y manejo su movimiento en un lapso de tiempo
-	gameManager.fillAlienListA(5)
-	gameManager.drawAlienListA()
+	//Pantalla de Inicio y  Seteo inicial de atributos del tablero del juego
+	game.title("BreackOut")
+	game.width(30)          							  // Ancho de la pantalla
+	game.height(40)										  // Alto de la pantalla
+	game.cellSize(25)									  // Tamaño de mi unidad de sprite
+	game.boardGround("space_invader_arcade2.png")		  // Fondo del juego
+	var ball1 = new Ball() 								  // Creo la bola
+	var inicio = false								      // Atributo para inicion de juego
+	
+	keyboard.num1().onPressDo({							  // Al presionar 1 comienza el juego
+		
+		if(!inicio){
+			inicio = true								        			 // Inicio de juego
+			ball1.drawBall()                        	       			     // Dibujo la bola
+	   		pad.fillTileMap()							        			 // llenar y dibujar el pad ES UN OBJETO
+			pad.drawPad()								         			 // Dibujo el pad			
+			gameManager.fillAlienList(gameManager.alienListA(),5, 30)        // Lleno la lista de aliens con cantidad y en una posicion en Y
+			gameManager.drawAlienList(gameManager.alienListA())	 			 // Dibujo los aliens
+		} 	
+	
+	})
+	// Movimiento de los aliens
 	game.onTick(1000, "alien update", {
-		gameManager.changeFrameAlien()        // Cambio de frame de los Aliens
-		gameManager.moveHorizontal()		  // Muevo los Alien de forma horizontal
-		if(gameManager.CollisionWidth()){	  // Chequeo colision con bordes
-			gameManager.moveDown()			  // Muevo los aliens hacia abajo cuando choca
-			gameManager.changeDirection()	  // Cambio de direccion de los Aliens
-		}
+		if(inicio){	gameManager.aliensBehavior(gameManager.alienListA()) } //movimiento en un cierto tiempo
+		
 	})		
-	// Manejo de teclas
+	// Manejo de teclas de juego
 	keyboard.left().onPressDo({pad.MoveLeft() if(pad.CollisionWidth()) pad.MoveRight()})	
 	keyboard.right().onPressDo({pad.MoveRight() if(pad.CollisionWidth()) pad.MoveLeft()})			
 	// Game Update	Muevo bola en un lapso de tiempo
 	game.onTick(150, "game update", {
-		ball1.movement() 						// Muevo bola
-		ball1.CollisionWidthAndHeight() 		// Chequeo colision con bordes 
-		ball1.collideWith(pad)					// Chequeo colision con pad
-		gameManager.collisionAliensWith(ball1)  // Chequeo colision de aliens con Bola
-	})	
+		if(inicio){
+			ball1.movement() 													// Muevo bola
+			ball1.CollisionWidthAndHeight() 									// Chequeo colision con bordes 
+			ball1.collideWith(pad)												// Chequeo colision con pad
+			gameManager.collisionAliensWith(ball1, gameManager.alienListA())    // Chequeo colision de aliens con Bola
+		}
 		
+	})	
+	// Inicio del programa	
 	game.start()
 
 }

@@ -1,14 +1,13 @@
 import wollok.game.*
 // Set de objetos para obtener imagenes
-object verde { method image() { return "tile_verde.png" } }
-object rojo { method image() { return "tile_rojo.png" } }
-object violeta { method image() { return "tile_violeta.png" } }
-object naranja { method image() { return "tile_naranja.png" } }
 object azul { method image() { return "tile_azul.png" } }
-object amarillo { method image() { return "tile_amarillo.png" } }
-object celeste { method image() { return "tile_celeste.png" } }
-object blanco { method image() { return "tile_gris_base.png" } }
 object ball { method image() { return "ball1.png" } }
+// Partes del Pad
+object pad_left { method image() { return "pad_left.png" } }
+object pad_center_left { method image() { return "pad_center_left.png" } }
+object pad_center_midle { method image() { return "pad_center_midle.png" } }
+object pad_center_right { method image() { return "pad_center_right.png" } }
+object pad_right { method image() { return "pad_right.png" } }
 
 // Tile generico base para armar la pelota y el pad
 class PieceTile {
@@ -29,11 +28,12 @@ class Vector2 {
 
 class Ball {
 	
-	var property tile = new PieceTile(color=ball, position= new Position(x=8, y=4))	// Tile inicial de la bola
+	var property tile = new PieceTile(color=ball, position= new Position(x=8, y=5))	// Tile inicial de la bola
 	var property velocity = 1														// Velocidad de desplazamiento
 	var property direction = new Vector2(x=2, y=1)   								// 45 grados x=1 y=1
 	var property relativeX = 0						 								// Origen de la pieza en el mapa X
 	var property relativeY = 0					  								    // Origen de la pieza en el mapa Y	
+	var property offset = 5															// Offset para chocar con bordes de Arcade
 	// Movimiento de la bola
 	method movement() {
 		tile.position(new Position(x = tile.position().x() + (direction.x() * velocity), 
@@ -46,8 +46,8 @@ class Ball {
 	}
 	// Colision con bordes arriba, abajo, derecha e izquierda
 	method CollisionWidthAndHeight() {
-		if(tile.position().x() <= 0 || tile.position().x() >= game.width() - 1) direction.x(direction.x() * -1) 
-		if(tile.position().y() <= 0 || tile.position().y() >= game.height() - 1) direction.y(direction.y() * -1) 
+		if(tile.position().x()  <= 0 + offset  || tile.position().x() + offset >= game.width() - 1 ) direction.x(direction.x() * -1) 
+		if(tile.position().y() <= 0  || tile.position().y() >= game.height() - 1 - 1 - offset ) direction.y(direction.y() * -1) 
 	}
 	// Colision con bola. Hace que la bola cambie direccion en Y cuando choca con el pad o los enemigos
 	method collideWith(other) {

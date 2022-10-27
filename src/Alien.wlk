@@ -19,16 +19,6 @@ class Alien {
 	method moveHorizontal(){
 		position = new Position(x = position.x() + direction, y = position.y())
 	}
-	// Moverse a la izquierda
-	method moveLeft(){
-		if(position.x() > 0)
-		position = new Position(x = position.x() - 1, y = position.y())
-	}
-	// Moverse a la derecha
-	method moveRight(){
-		if(position.x() < game.width() - 1 )
-		position = new Position(x = position.x() + 1, y = position.y())
-	}
 	// Moverse hacia abajo
 	method moveDown(){
 		if(position.y() > 0 )
