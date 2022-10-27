@@ -19,6 +19,6 @@
 ## Otros
 
 - Programación de Objetos I. Comisión 1.
-- Universidad Nacional de Hurlingham (UNAHUR)
-- Versión de Wollok
+- Universidad Nacional de Hurlingham (UNAHUR).
+- Versión de Wollok: (Completar).
 - Una vez terminado, no tenemos problemas en que el repositorio sea público / queremos manternerlo privado
