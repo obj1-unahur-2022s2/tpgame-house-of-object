@@ -2,13 +2,14 @@
 
 ## Equipo de desarrollo
 
-- Alguien
-- Persona
-- etc.
+- Cabero, Alejandro.
+- Loiacono, Nahuel.
+- Mogno, Joaquin.
+- Peloso, Ezequiel.
 
 ## Capturas
 
-(agregar)
+(Agregar)
 
 ## Reglas de Juego / Instrucciones
 
@@ -17,6 +18,7 @@
 
 ## Otros
 
-- Curso/Facultad
-- Versión de wollok
+- Programación de Objetos I. Comisión 1.
+- Universidad Nacional de Hurlingham (UNAHUR).
+- Versión de Wollok: (Completar).
 - Una vez terminado, no tenemos problemas en que el repositorio sea público / queremos manternerlo privado
