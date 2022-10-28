@@ -23,15 +23,25 @@ program Game {
 	   		pad.fillTileMap()							        			 // llenar y dibujar el pad ES UN OBJETO
 			pad.drawPad()								         			 // Dibujo el pad			
 			gameManager.fillAlienList(gameManager.alienListA(),5, 30)        // Lleno la lista de aliens con cantidad y en una posicion en Y
-			gameManager.drawAlienList(gameManager.alienListA())	 			 // Dibujo los aliens
+			gameManager.drawAlienList(gameManager.alienListA())	
+			gameManager.fillAlienList(gameManager.alienListB(),5, 25)        // Lleno la lista de aliens con cantidad y en una posicion en Y
+			gameManager.drawAlienList(gameManager.alienListB())	
+			gameManager.fillAlienList(gameManager.alienListC(),5, 20)        // Lleno la lista de aliens con cantidad y en una posicion en Y
+			gameManager.drawAlienList(gameManager.alienListC())	 
+						
 		} 	
 	
 	})
 	// Movimiento de los aliens
-	game.onTick(1000, "alien update", {
-		if(inicio){	gameManager.aliensBehavior(gameManager.alienListA()) } //movimiento en un cierto tiempo
-		
-	})		
+	game.onTick(800, "alien update", {
+		if(inicio){	gameManager.aliensBehavior(gameManager.alienListA()) }}) //movimiento en un cierto tiempo
+		game.onTick(800, "alien update", {
+		if(inicio){	gameManager.aliensBehavior(gameManager.alienListB()) } })
+		game.onTick(800, "alien update", {
+		if(inicio){	gameManager.aliensBehavior(gameManager.alienListC()) } 
+	})
+	
+	
 	// Manejo de teclas de juego
 	keyboard.left().onPressDo({pad.MoveLeft() if(pad.CollisionWidth()) pad.MoveRight()})	
 	keyboard.right().onPressDo({pad.MoveRight() if(pad.CollisionWidth()) pad.MoveLeft()})			
@@ -42,10 +52,16 @@ program Game {
 			ball1.CollisionWidthAndHeight() 									// Chequeo colision con bordes 
 			ball1.collideWith(pad)												// Chequeo colision con pad
 			gameManager.collisionAliensWith(ball1, gameManager.alienListA())    // Chequeo colision de aliens con Bola
-		}
+			gameManager.collisionAliensWith(ball1, gameManager.alienListB())
+			gameManager.collisionAliensWith(ball1, gameManager.alienListC())
+			
+			}
+			
+			
+			
 		
-	})	
+})
+		
 	// Inicio del programa	
 	game.start()
-
 }

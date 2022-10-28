@@ -6,6 +6,13 @@ import Alien.*
 object gameManager {	
 	// Inicalizo lista de aliens de tipo A
 	const property alienListA = []
+	// Inicalizo lista de aliens de tipo B
+	const property alienListB=[]
+	// Inicalizo lista de aliens de tipo C
+	const property alienListC=[]
+	// Inicalizo lista de aliens de tipo D
+	const property alienListD=[]
+	
 	// Distancia de separacion entre aliens
 	var property alienOfset = 3
 	// Offset para chocar con los bordes del Arcade
