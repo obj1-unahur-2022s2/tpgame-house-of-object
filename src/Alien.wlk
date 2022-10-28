@@ -3,10 +3,11 @@ import wollok.game.*
 
 class Alien {
 	
-	var property position                               // Posocion del Alien
-	var property frame = 1								// Cuadro de Animacion inicial del Alien
-	var property image = "invaderA" + frame + ".png"	// Imagen Inicial del Alien en base a su cuadro inicial
-	var property direction = 1							// Direccion inicial del movimiento del alien
+	var property position                          			        // Posocion del Alien 
+	var property alienLetter						        		// Letra de imagen del Alien, ejemplo A, B o C
+	var property frame = 1								            // Cuadro de Animacion inicial del Alien
+	var property image = "invader" + alienLetter + frame + ".png"	// Imagen Inicial del Alien en base a su cuadro inicial
+	var property direction = 1										// Direccion inicial del movimiento del alien
 	// Dibujar el Alien
 	method draw() {
 		game.addVisual(self)
@@ -25,9 +26,9 @@ class Alien {
 		position = new Position(x = position.x(), y = position.y() - 1)
 	}
 	// Cambiae cuadro de animacion
-	method changeFrame(){
+	method changeFrame(fameLetter){
 		if(frame == 1) frame++ else frame--
-		image = "invaderA" + frame + ".png"
+		image = "invader" + fameLetter + frame + ".png"
 	}
 	// Cambiar de direccion
 	method changeDirection(){
@@ -40,4 +41,8 @@ class Alien {
 		|| aBall.tile().position().x() == position.x() + 1 && aBall.tile().position().y() == position.y()
 		|| aBall.tile().position().x() == position.x() + 1 && aBall.tile().position().y() == position.y() + 1		
 	}
+}
+
+class AlienB inherits Alien {
+	//var property image = "invaderB" + frame + ".png"
 }

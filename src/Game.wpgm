@@ -14,7 +14,8 @@ program Game {
 	game.boardGround("space_invader_arcade2.png")		  // Fondo del juego
 	var ball1 = new Ball() 								  // Creo la bola
 	var inicio = false								      // Atributo para inicion de juego
-	
+	var alienMovementTime = 800							  // Tiempo del OnTick de las lista de Aliens
+	var ballMovementTime = 150							  // Tiempo de OnTick de la bola
 	keyboard.num1().onPressDo({							  // Al presionar 1 comienza el juego
 		
 		if(!inicio){
@@ -22,38 +23,39 @@ program Game {
 			ball1.drawBall()                        	       			     // Dibujo la bola
 	   		pad.fillTileMap()							        			 // llenar y dibujar el pad ES UN OBJETO
 			pad.drawPad()								         			 // Dibujo el pad			
-			gameManager.fillAlienList(gameManager.alienListA(),5, 30)        // Lleno la lista de aliens con cantidad y en una posicion en Y
-			gameManager.drawAlienList(gameManager.alienListA())	
-			gameManager.fillAlienList(gameManager.alienListB(),5, 25)        // Lleno la lista de aliens con cantidad y en una posicion en Y
-			gameManager.drawAlienList(gameManager.alienListB())	
-			gameManager.fillAlienList(gameManager.alienListC(),5, 20)        // Lleno la lista de aliens con cantidad y en una posicion en Y
-			gameManager.drawAlienList(gameManager.alienListC())	 
+			gameManager.fillAlienList(gameManager.alienListA(),5, 31, "A")   // Lleno la lista de aliens con cantidad y en una posicion en Y
+			gameManager.drawAlienList(gameManager.alienListA())				 // y la letra del Sprite, en este caso A
+			gameManager.fillAlienList(gameManager.alienListB(),5, 27, "B")   // Lleno la lista de aliens con cantidad y en una posicion en Y
+			gameManager.drawAlienList(gameManager.alienListB())			     // y la letra del Sprite, en este caso B
+			gameManager.fillAlienList(gameManager.alienListC(),5, 23, "C")   // Lleno la lista de aliens con cantidad y en una posicion en Y
+			gameManager.drawAlienList(gameManager.alienListC())	 			 // y la letra del Sprite, en este caso C
 						
 		} 	
 	
 	})
 	// Movimiento de los aliens
-	game.onTick(800, "alien update", {
-		if(inicio){	gameManager.aliensBehavior(gameManager.alienListA()) }}) //movimiento en un cierto tiempo
-		game.onTick(800, "alien update", {
-		if(inicio){	gameManager.aliensBehavior(gameManager.alienListB()) } })
-		game.onTick(800, "alien update", {
-		if(inicio){	gameManager.aliensBehavior(gameManager.alienListC()) } 
-	})
+	game.onTick(alienMovementTime, "alien update", {
+		if(inicio){	gameManager.aliensBehavior(gameManager.alienListA(),"A") }}) //movimiento en un cierto tiempo lista e indice de Alien A
+		
+	game.onTick(alienMovementTime, "alien update", {
+		if(inicio){	gameManager.aliensBehavior(gameManager.alienListB(),"B") }}) //movimiento en un cierto tiempo lista e indice de Alien B
+		
+	game.onTick(alienMovementTime, "alien update", {
+		if(inicio){	gameManager.aliensBehavior(gameManager.alienListC(),"C") }}) //movimiento en un cierto tiempo lista e indice de Alien C
 	
 	
 	// Manejo de teclas de juego
 	keyboard.left().onPressDo({pad.MoveLeft() if(pad.CollisionWidth()) pad.MoveRight()})	
 	keyboard.right().onPressDo({pad.MoveRight() if(pad.CollisionWidth()) pad.MoveLeft()})			
 	// Game Update	Muevo bola en un lapso de tiempo
-	game.onTick(150, "game update", {
+	game.onTick(ballMovementTime, "game update", {
 		if(inicio){
 			ball1.movement() 													// Muevo bola
 			ball1.CollisionWidthAndHeight() 									// Chequeo colision con bordes 
 			ball1.collideWith(pad)												// Chequeo colision con pad
-			gameManager.collisionAliensWith(ball1, gameManager.alienListA())    // Chequeo colision de aliens con Bola
-			gameManager.collisionAliensWith(ball1, gameManager.alienListB())
-			gameManager.collisionAliensWith(ball1, gameManager.alienListC())
+			gameManager.collisionAliensWith(ball1, gameManager.alienListA())    // Chequeo colision de aliens A con Bola
+			gameManager.collisionAliensWith(ball1, gameManager.alienListB())	// Chequeo colision de aliens B con Bola
+			gameManager.collisionAliensWith(ball1, gameManager.alienListC())	// Chequeo colision de aliens C con Bola
 			
 			}
 			

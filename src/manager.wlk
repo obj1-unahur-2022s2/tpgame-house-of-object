@@ -29,9 +29,9 @@ object gameManager {
 		
 	}	
 	// Lleno lista de Aliens 
-	method fillAlienList(list, count, yPos){
+	method fillAlienList(list, count, yPos, letter){
 		(0..count - 1).forEach({
-			index => list.add(new Alien(position=new Position(x= offset + index*alienOfset, y=yPos)))
+			index => list.add(new Alien(position=new Position(x= offset + index*alienOfset, y=yPos), alienLetter=letter))
 		})
 	}
 	// Dibujo lista de Aliens
@@ -41,9 +41,9 @@ object gameManager {
 		})
 	}
 	// Cambio Frame de cada Alien de la lista
-	method changeFrameAlien(list){
+	method changeFrameAlien(list, fameLetter){
 		list.forEach({
-			alien => alien.changeFrame()
+			alien => alien.changeFrame(fameLetter)
 		})
 	}
 	// Mover los aliens hacia abajo
@@ -72,8 +72,8 @@ object gameManager {
 	
 	
 	// Comportamiento de aliens
-	method aliensBehavior(list){
-		self.changeFrameAlien(list)  				// Cambio de frame de los Aliens
+	method aliensBehavior(list, fameLetter){
+		self.changeFrameAlien(list, fameLetter)  	// Cambio de frame de los Aliens
 					self.moveHorizontal(list)		// Muevo los Alien de forma horizontal
 					if(self.CollisionWidth(list)){	// Chequeo colision con bordes
 						self.moveDown(list)			// Muevo los aliens hacia abajo cuando choca
