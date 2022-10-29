@@ -12,17 +12,22 @@ program Game {
 	game.height(40)										  // Alto de la pantalla
 	game.cellSize(25)									  // Tamaño de mi unidad de sprite
 	game.boardGround("space_invader_arcade2.png")		  // Fondo del juego
+	game.addVisual(controlText)							  // Texto de explicacion de controles
+	game.addVisual(insertCointText)						  // Texto de insert coin
 	var ball1 = new Ball() 								  // Creo la bola
 	var inicio = false								      // Atributo para inicion de juego
 	var alienMovementTime = 800							  // Tiempo del OnTick de las lista de Aliens
 	var ballMovementTime = 150							  // Tiempo de OnTick de la bola
+	insertCointText.animation()							  // Animacion de insert coin
 	keyboard.num1().onPressDo({							  // Al presionar 1 comienza el juego
 		
 		if(!inicio){
 			inicio = true								        			 // Inicio de juego
 			ball1.drawBall()                        	       			     // Dibujo la bola
 	   		pad.fillTileMap()							        			 // llenar y dibujar el pad ES UN OBJETO
-			pad.drawPad()								         			 // Dibujo el pad			
+			pad.drawPad()								         			 // Dibujo el pad	
+			game.removeVisual(controlText)									 // Remover texto
+			game.removeVisual(insertCointText)								 // Remover texto
 			gameManager.fillAlienList(gameManager.alienListA(),5, 31, "A")   // Lleno la lista de aliens con cantidad y en una posicion en Y
 			gameManager.drawAlienList(gameManager.alienListA())				 // y la letra del Sprite, en este caso A
 			gameManager.fillAlienList(gameManager.alienListB(),5, 27, "B")   // Lleno la lista de aliens con cantidad y en una posicion en Y

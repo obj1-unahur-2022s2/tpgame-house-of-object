@@ -8,6 +8,31 @@ object pad_center_left { method image() { return "pad_center_left.png" } }
 object pad_center_midle { method image() { return "pad_center_midle.png" } }
 object pad_center_right { method image() { return "pad_center_right.png" } }
 object pad_right { method image() { return "pad_right.png" } }
+// Texto de controles
+object controlText { 
+	var property position = new Position(x = 9, y = 30 )
+	var property image = "controls_text.png"
+}
+
+object insertCointText {
+	var property position = new Position(x = 9, y = 20 )
+	var property image = "text_insert_coin.png"
+	
+	method changeFrame(){
+		if(image == "text_insert_coin.png"){
+			image = "text_insert_coin_black.png"
+		}
+		else{
+			image = "text_insert_coin.png"
+		}
+	}
+	
+	method animation(){
+		game.onTick(800, "animacion de cartel", { self.changeFrame()})
+	}
+	
+	
+}
 
 // Tile generico base para armar la pelota y el pad
 class PieceTile {
