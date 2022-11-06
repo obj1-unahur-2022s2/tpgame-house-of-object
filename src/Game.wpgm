@@ -1,69 +1,9 @@
 import wollok.game.*
-import alien.*
 import ball.*
-import manager.*
 import pad.*
+import Alien.*
+import manager.*
 
-program Game {
-	
-	// Pantalla de Inicio y  Seteo inicial de atributos del tablero del juego
-	game.title("BreakOut")
-	game.width(30)          							  // Ancho pantalla.
-	game.height(40)										  // Alto pantalla.
-	game.cellSize(25)									  // Tamaño de unidad de sprite.
-	game.boardGround("space_invader_arcade2.png")		  // Fondo del juego.
-	game.addVisual(controlText)							  // Texto de explicacion de controles.
-	game.addVisual(insertCointText)						  // Texto de insert coin.
-	insertCointText.animation()							  // Animacion de insert coin.
-	var ball1 = new Ball() 								  // Creo la bola.
-	var inicio = false								      // Atributo para inicio de juego.
-	var alienMovementTime = 800							  // Tiempo del OnTick de las lista de Aliens.
-	var ballMovementTime = 150							  // Tiempo de OnTick de la bola.
-
-	keyboard.num1().onPressDo({							  // Al presionar 1 comienza el juego.
-		if(!inicio){
-			inicio = true								        			  // Inicio de juego.
-			ball1.drawBall()                        	       			      // Dibujo la bola.
-	   		pad.fillTileMap()							        			  // Llenar y dibujar el pad (objeto).
-			pad.drawPad()								         			  // Dibujo el pad.	
-			game.removeVisual(controlText)									  // Remover texto.
-			game.removeVisual(insertCointText)								  // Remover texto.
-			gameManager.fillAlienList(gameManager.alienListA(), 5, 31, "A")   // Lleno la lista de aliens con cantidad y posicion en Y.
-			gameManager.drawAlienList(gameManager.alienListA())				  // y la letra del Sprite, en este caso A.
-			gameManager.fillAlienList(gameManager.alienListB(), 5, 27, "B")   // Lleno la lista de aliens con cantidad y posicion en Y.
-			gameManager.drawAlienList(gameManager.alienListB())			      // y la letra del Sprite, en este caso B.
-			gameManager.fillAlienList(gameManager.alienListC(), 5, 23, "C")   // Lleno la lista de aliens con cantidad y posicion en Y.
-			gameManager.drawAlienList(gameManager.alienListC())	 			  // y la letra del Sprite, en este caso C.
-						
-		} 	
-	})
-	
-	// Movimiento de los aliens.
-	game.onTick(alienMovementTime, "alien update", {
-		if(inicio){	gameManager.aliensBehavior(gameManager.alienListA(),"A") }}) // Movimiento en un cierto tiempo lista e indice de Alien A.
-		
-	game.onTick(alienMovementTime, "alien update", {
-		if(inicio){	gameManager.aliensBehavior(gameManager.alienListB(),"B") }}) // Movimiento en un cierto tiempo lista e indice de Alien B.
-		
-	game.onTick(alienMovementTime, "alien update", {
-		if(inicio){	gameManager.aliensBehavior(gameManager.alienListC(),"C") }}) // Movimiento en un cierto tiempo lista e indice de Alien C.
-	
-	// Manejo de teclas de juego. Flecha izquierda y derecha.
-	keyboard.left().onPressDo({pad.moveLeft() if(pad.collisionWidth()) pad.moveRight()})	
-	keyboard.right().onPressDo({pad.moveRight() if(pad.collisionWidth()) pad.moveLeft()})			
-	
-	// Game Update	Muevo bola en un lapso de tiempo.
-	game.onTick(ballMovementTime, "game update", {
-		if(inicio){
-			ball1.movement() 													// Muevo bola.
-			ball1.CollisionWidthAndHeight() 									// Chequeo colision con bordes.
-			ball1.collideWith(pad)												// Chequeo colision con pad.
-			gameManager.collisionAliensWith(ball1, gameManager.alienListA())    // Chequeo colision de aliens A con Bola.
-			gameManager.collisionAliensWith(ball1, gameManager.alienListB())	// Chequeo colision de aliens B con Bola.
-			gameManager.collisionAliensWith(ball1, gameManager.alienListC())	// Chequeo colision de aliens C con Bola.
-			}	
-})
-		
-	// Inicio del juego.
-	game.start()
+program Game {	
+		gameManager.play()
 }
