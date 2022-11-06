@@ -1,8 +1,9 @@
 import wollok.game.*
+import alien.*
 import ball.*
-import pad.*
-import Alien.*
 import manager.*
+import pad.*
+
 
 program Game {	
 		gameManager.play()
