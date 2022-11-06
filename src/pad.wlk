@@ -5,7 +5,7 @@ object pad {
 	// El pad esta formado por una lista de Tiles en linea.	
 	const property tilesMap = []			      				// Mapa de tiles de la pieza.
 	var property padLength = 5				      				// Tamaño de lado del pad.
-	var property origin = new Vector2(x= 5, y = 6)  			// Posición de origen del pad.
+	var property origin = new Vector2(x= 11, y = 6)  			// Posición de origen del pad.
 	var property offset = 5
 	// Lista de Sprites de las partes del pad (son 5 partes).
 	const property sprites = [pad_left, pad_center_left, pad_center_midle, pad_center_right, pad_right]

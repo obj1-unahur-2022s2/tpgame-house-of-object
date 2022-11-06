@@ -123,8 +123,8 @@ object gameManager {
 	}
 	
 	// Condicion de derrota.
-	// No funciona ball1.direction().y() < pad.origin().y() or ...
-	method isLoser() = self.hayAlgunAlienALaAlturaDelPad()
+	// No funciona ball1.direction().y() < pad.origin().y() or ...PORQUE BALL NO TIENE DIRECTION, TIENE TILE, Y ESE TILE TIENE DIRECTION
+	method isLoser() = self.hayAlgunAlienALaAlturaDelPad() || ball1.tile().position().y() < pad.origin().y()
 	
 	// Comprueba si al menos un alien está a la altura del pad.
 	method hayAlgunAlienALaAlturaDelPad() =
