@@ -21,12 +21,9 @@ object gameManager {
 	var inicio = false								      // Atributo para inicio de juego.
 	var alienMovementTime = 800							  // Tiempo del OnTick de las listas de aliens.
 	var ballMovementTime = 150							  // Tiempo de OnTick de la ball.
-	/////////////////////////////////////////////
-	// var property soundFondo = new Sound(file = "x.mp3")
-	// var property soundReboteBallEnPared = new Sound(file = "x.mp3")
-	// var property soundReboteBallEnPad = new Sound(file = "x.mp3")
-	// var property soundMuerteDeAlien = new Sound(file = "x.mp3")
-	/////////////////////////////////////////////
+	var property soundFondo = new Sound(file = "sonidoFondo.mp3")		// Sonido de fondo del juego.
+	var property soundVictoria = new Sound(file = "sonidoVictoria.mp3")	// Sonido de victoria.
+	var property soundDerrota = new Sound(file = "sonidoDerrota.mp3")	// Sonido de derrota.
 	
 	// Chequeo de colision de los aliens con la ball.
 	method collisionAliensWith(aBall, lista) {
@@ -89,14 +86,11 @@ object gameManager {
 		}
 	}
 	
-	/////////////////////////////////////////////
-	
 	// Reproducir audio general en loop.
-	// method playSoundFondo() {		
-    	// soundFondo.shouldLoop(true)                      	// El tema se repite en loop.
-    	// soundFondo.play()									// Reproducción de sonido.
-	//}
-	/////////////////////////////////////////////
+	method playSoundFondoEnLoop() {		
+    	soundFondo.shouldLoop(true)                      	// El tema se repite en loop.
+    	soundFondo.play()									// Reproducción de sonido.
+	}
 	
 	// Sonidos de rebotes de ball y muertes de alien.
 
@@ -118,12 +112,14 @@ object gameManager {
 			inicio = false
 			// Agrego cartel de ganador.
 			game.addVisual(youWin)			// Cartel de winner.	
-			youWin.animation()				// Animación de cartel de winner.			  
+			youWin.animation()				// Animación de cartel de winner.	
+			soundFondo.stop()				// Freno de música de fondo.
+			soundVictoria.play()		  	// Reproducción de sonido de victoria.
 		}
 	}
 	
 	// Condicion de derrota.
-	// No funciona ball1.direction().y() < pad.origin().y() or ...PORQUE BALL NO TIENE DIRECTION, TIENE TILE, Y ESE TILE TIENE DIRECTION
+	// Ball no tiene direction, tiene tile, y ese tile tiene direction.
 	method isLoser() = self.hayAlgunAlienALaAlturaDelPad() || ball1.tile().position().y() < pad.origin().y()
 	
 	// Comprueba si al menos un alien está a la altura del pad.
@@ -141,6 +137,8 @@ object gameManager {
 			inicio = false
 			// Agrego cartel de perdedor.
 			game.addVisual(youLost)			// Cartel de perdedor. Cambiar por game.addVisual(youLost).
+			soundFondo.stop()				// Freno de música de fondo.
+			soundDerrota.play()				// Reproducción de sonido de derrota.
 		}
 	}
 	
@@ -160,6 +158,7 @@ object gameManager {
 				if(!inicio) {
 					inicio = true								        			 // Inicio de juego.
 					// self.playSound()					// FALTAN AUDIOS DEL JUEGO.
+					self.playSoundFondoEnLoop()
 					ball1.drawBall()                        	       			     // Dibujo la ball.
 			   		pad.fillTileMap()							        			 // Llenar el pad.
 					pad.drawPad()								         			 // Dibujo el pad.	
