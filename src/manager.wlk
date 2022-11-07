@@ -189,7 +189,7 @@ object gameManager {
 					self.collisionAliensWith(ball1, self.alienListB())	        // Chequeo colision de aliens B con ball.
 					self.collisionAliensWith(ball1, self.alienListC())	        // Chequeo colision de aliens C con ball.
 					self.checkWinTheGame()										// Chequea si se ganó el juego.
-					//self.checkLostTheGame()										// Chequea si se perdió el juego.
+					self.checkLostTheGame()										// Chequea si se perdió el juego.
 					}					
 	})		
 	
