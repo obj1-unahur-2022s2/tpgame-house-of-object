@@ -19,12 +19,9 @@
 - Apretando la tecla 1, da inicio al juego.
 - Con las flechas derecha e izquierda se mueve el pad.
 
-- Condicion de victoria:
-  -Eliminar todos los aliens.
+- Condicion de victoria: eliminar todos los aliens.
 
-- Condición de derrota:
-  -Que la ball esté por debajo del pad en Y.
-  -O que al menos algún alien haya bajado hasta la altura del pad.
+- Condición de derrota: que la ball esté por debajo del pad en Y, o que al menos algún alien haya bajado hasta la altura del pad.
 
 ## Otros
 
