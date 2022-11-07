@@ -1,4 +1,4 @@
-# BreakOut
+# Arkanoid Invaders
 
 ## Equipo de desarrollo
 
