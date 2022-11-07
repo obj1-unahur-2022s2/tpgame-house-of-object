@@ -137,7 +137,7 @@ object gameManager {
 	// Condiciones básicas e inicio de juego.
 	method play() {
 			// Pantalla de inicio y  seteo inicial de atributos del tablero del juego.
-			game.title("BreackOut")
+			game.title("Arkanoid Invaders")							// Nombre del juego.
 			game.width(30)          							  	// Ancho de la pantalla.
 			game.height(40)										  	// Alto de la pantalla.
 			game.cellSize(25)									  	// Tamaño de mi unidad de sprite.
