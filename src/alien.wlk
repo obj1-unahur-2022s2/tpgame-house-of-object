@@ -1,6 +1,6 @@
 import wollok.game.*
 import ball.*
-// import manager.* --> Para reproducir audios.
+// import manager.*    	// Para audios.
 
 
 class Alien {
@@ -9,6 +9,7 @@ class Alien {
 	var property frame = 1								            // Cuadro de animacion inicial del alien.
 	var property image = "invader" + alienLetter + frame + ".png"	// Imagen inicial del alien en base a su cuadro inicial.
 	var property direction = 1										// Direccion inicial del movimiento del alien.
+	var property soundMuerteDeAlien = new Sound(file = "sonidoMuerteAlien.mp3")		// Sonido de muerte de alien.
 	
 	// Dibujar el alien.
 	method draw() {
@@ -18,8 +19,6 @@ class Alien {
 	// Borrar el alien.
 	method erase() {
 		game.removeVisual(self)
-		// Agregar audio de sonido de muerte de alien.
-		// gameManager.soundMuerteDeAlien().play()
 	}
 	
 	// Movimiento del alien según su dirección.
@@ -40,7 +39,7 @@ class Alien {
 	}
 	
 	// Cambiar de dirección.
-	method changeDirection(){
+	method changeDirection() {
 		if(direction == 1) direction = -1 else direction = 1
 	}	
 	

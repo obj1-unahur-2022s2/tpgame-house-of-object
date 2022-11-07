@@ -17,10 +17,10 @@ object gameManager {
 	// Offset para chocar con los bordes del Arcade.
 	var property offset = 5
 	
-	var ball1 = new Ball() 								  // Creo la ball.
-	var inicio = false								      // Atributo para inicio de juego.
-	var alienMovementTime = 800							  // Tiempo del OnTick de las listas de aliens.
-	var ballMovementTime = 150							  // Tiempo de OnTick de la ball.
+	var ball1 = new Ball() 								  				// Creo la ball.
+	var inicio = false								      				// Atributo para inicio de juego.
+	var alienMovementTime = 800							  				// Tiempo del OnTick de las listas de aliens.
+	var ballMovementTime = 150							  				// Tiempo de OnTick de la ball.
 	var property soundFondo = new Sound(file = "sonidoFondo.mp3")		// Sonido de fondo del juego.
 	var property soundVictoria = new Sound(file = "sonidoVictoria.mp3")	// Sonido de victoria.
 	var property soundDerrota = new Sound(file = "sonidoDerrota.mp3")	// Sonido de derrota.
@@ -91,14 +91,6 @@ object gameManager {
     	soundFondo.shouldLoop(true)                      	// El tema se repite en loop.
     	soundFondo.play()									// Reproducción de sonido.
 	}
-	
-	// Sonidos de rebotes de ball y muertes de alien.
-
-	// method playSoundReboteBallConParedes() {soundReboteBallEnPared.play()}
-	// method playSoundReboteBallConPad() {soundReboteBallEnPad.play()}
-	// method playSoundMuerteDeAlien() {soundMuerteDeAlien.play()}
-	
-	/////////////////////////////////////////////
 
 	// Condicion de victoria.
 	method isWinner() = alienListA.isEmpty() && alienListB.isEmpty() && alienListC.isEmpty()
@@ -146,19 +138,18 @@ object gameManager {
 	method play() {
 			// Pantalla de inicio y  seteo inicial de atributos del tablero del juego.
 			game.title("BreackOut")
-			game.width(30)          							  // Ancho de la pantalla.
-			game.height(40)										  // Alto de la pantalla.
-			game.cellSize(25)									  // Tamaño de mi unidad de sprite.
-			game.boardGround("space_invader_arcade2.png")		  // Fondo del juego.
-			game.addVisual(controlText)							  // Texto de explicacion de controles.
-			game.addVisual(insertCointText)						  // Texto de insert coin.		
-			insertCointText.animation()							  // Animacion de insert coin.
-			keyboard.num1().onPressDo({							  // Al presionar 1 comienza el juego.
+			game.width(30)          							  	// Ancho de la pantalla.
+			game.height(40)										  	// Alto de la pantalla.
+			game.cellSize(25)									  	// Tamaño de mi unidad de sprite.
+			game.boardGround("space_invader_arcade2.png")		  	// Fondo del juego.
+			game.addVisual(controlText)							  	// Texto de explicacion de controles.
+			game.addVisual(insertCointText)						  	// Texto de insert coin.		
+			insertCointText.animation()							  	// Animacion de insert coin.
+			keyboard.num1().onPressDo({							  	// Al presionar 1 comienza el juego.
 				
 				if(!inicio) {
 					inicio = true								        			 // Inicio de juego.
-					// self.playSound()					// FALTAN AUDIOS DEL JUEGO.
-					self.playSoundFondoEnLoop()
+					self.playSoundFondoEnLoop()										 // Sonido de fondo del juego.
 					ball1.drawBall()                        	       			     // Dibujo la ball.
 			   		pad.fillTileMap()							        			 // Llenar el pad.
 					pad.drawPad()								         			 // Dibujo el pad.	

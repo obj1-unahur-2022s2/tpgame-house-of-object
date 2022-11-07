@@ -1,5 +1,5 @@
 import wollok.game.*
-// import manager.* --> Para reproducir audios.
+// import manager.*    	// Para audios.
 
 // Set de objetos para obtener imágenes.
 object azul { method image() { return "tile_azul.png" } }
@@ -91,8 +91,8 @@ class Ball {
 	var property relativeX = 0						 						// Origen de la pieza en el mapa X.
 	var property relativeY = 0					  							// Origen de la pieza en el mapa Y.
 	var property offset = 5													// Offset para chocar con bordes de Arcade.
-	// var property soundReboteBallEnPared = new Sound(file = "sonidoReboteBallConPared.mp3")
-	// var property soundReboteBallEnPad = new Sound(file = "sonidoReboteBallConPad.mp3")
+	var property soundReboteBallEnPared = new Sound(file = "sonidoReboteBallConPared.mp3")	// Sonido de rebote con pared.
+	var property soundReboteBallEnPad = new Sound(file = "sonidoReboteBallConPad.mp3")		// Sonido de rebote con pad.
 	
 	// Movimiento de la ball.
 	method movement() {
@@ -110,6 +110,7 @@ class Ball {
 	method CollisionWidthAndHeight() {
 		if(tile.position().x()  < 0 + offset  || tile.position().x() + offset >= game.width() - 1 ) direction.x(direction.x() * -1) 
 		if(tile.position().y() <= 0  || tile.position().y() >= game.height() - 1 - 1 - offset ) direction.y(direction.y() * -1)
+		// Agregar sonido de rebote con paredes.
 	}
 	
 	// Colision con ball. Hace que la ball cambie dirección en Y cuando choca con el pad o los aliens.
