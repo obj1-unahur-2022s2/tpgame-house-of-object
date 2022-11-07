@@ -5,7 +5,7 @@
 - Cabero, Alejandro.
 - Loiacono, Nahuel.
 - Mogno, Joaquin.
-- Peloso, Ezequiel.
+- Pelozo, Ezequiel.
 
 ## Capturas
 
