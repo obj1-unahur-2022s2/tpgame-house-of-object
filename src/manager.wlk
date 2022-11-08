@@ -17,10 +17,10 @@ object gameManager {
 	// Offset para chocar con los bordes del Arcade.
 	var property offset = 5
 	
-	var ball1 = new Ball() 								  				// Creo la ball.
+	const ball1 = new Ball() 							  				// Creo la ball.
 	var inicio = false								      				// Atributo para inicio de juego.
-	var alienMovementTime = 800							  				// Tiempo del OnTick de las listas de aliens.
-	var ballMovementTime = 150							  				// Tiempo de OnTick de la ball.
+	const alienMovementTime = 800						  				// Tiempo del OnTick de las listas de aliens.
+	const ballMovementTime = 150						  				// Tiempo de OnTick de la ball.
 	var property soundFondo = new Sound(file = "sonidoFondo.mp3")		// Sonido de fondo del juego.
 	var property soundVictoria = new Sound(file = "sonidoVictoria.mp3")	// Sonido de victoria.
 	var property soundDerrota = new Sound(file = "sonidoDerrota.mp3")	// Sonido de derrota.

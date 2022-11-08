@@ -10,6 +10,7 @@ class Alien {
 	var property image = "invader" + alienLetter + frame + ".png"	// Imagen inicial del alien en base a su cuadro inicial.
 	var property direction = 1										// Direccion inicial del movimiento del alien.
 	var property soundMuerteDeAlien = new Sound(file = "sonidoMuerteAlien.mp3")		// Sonido de muerte de alien.
+	var playSound = false
 	
 	// Dibujar el alien.
 	method draw() {
@@ -19,6 +20,12 @@ class Alien {
 	// Borrar el alien.
 	method erase() {
 		game.removeVisual(self)
+		if(playSound){
+			soundMuerteDeAlien.stop()
+			playSound = false
+		}
+		soundMuerteDeAlien.play()
+		playSound = true
 	}
 	
 	// Movimiento del alien según su dirección.
