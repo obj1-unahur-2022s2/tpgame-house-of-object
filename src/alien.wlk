@@ -1,6 +1,6 @@
 import wollok.game.*
 import ball.*
-// import manager.*    	// Para audios.
+import manager.*    	
 
 
 class Alien {
@@ -19,13 +19,14 @@ class Alien {
 	
 	// Borrar el alien.
 	method erase() {
-		game.removeVisual(self)
+		game.removeVisual(self)									   // Remuevo el visual
 		if(playSound){
 			soundMuerteDeAlien.stop()
 			playSound = false
 		}
-		soundMuerteDeAlien.play()
-		playSound = true
+		soundMuerteDeAlien.play()								   // Reproduccion de sonido de muerte. 			
+		playSound = true										   // Control de Reproduccion de sonido de muerte n true.	
+		gameManager.aliensCounter(gameManager.aliensCounter() - 1) // Resto un alien al contador de Aliens.
 	}
 	
 	// Movimiento del alien según su dirección.

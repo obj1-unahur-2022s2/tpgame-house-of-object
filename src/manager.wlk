@@ -2,6 +2,7 @@ import wollok.game.*
 import ball.*
 import pad.*
 import alien.*
+import alienCounter.*
 
 object gameManager {
 		
@@ -24,6 +25,7 @@ object gameManager {
 	var property soundFondo = new Sound(file = "sonidoFondo.mp3")		// Sonido de fondo del juego.
 	var property soundVictoria = new Sound(file = "sonidoVictoria.mp3")	// Sonido de victoria.
 	var property soundDerrota = new Sound(file = "sonidoDerrota.mp3")	// Sonido de derrota.
+	var property aliensCounter = 15										// Contador de Aliens.
 	
 	// Chequeo de colision de los aliens con la ball.
 	method collisionAliensWith(aBall, lista) {
@@ -141,7 +143,7 @@ object gameManager {
 			game.width(30)          							  	// Ancho de la pantalla.
 			game.height(40)										  	// Alto de la pantalla.
 			game.cellSize(25)									  	// Tamaño de mi unidad de sprite.
-			game.boardGround("space_invader_arcade2.png")		  	// Fondo del juego.
+			game.boardGround("space_invader_arcade2.png")		  	// Fondo del juego.			
 			game.addVisual(controlText)							  	// Texto de explicacion de controles.
 			game.addVisual(insertCointText)						  	// Texto de insert coin.		
 			insertCointText.animation()							  	// Animacion de insert coin.
@@ -154,7 +156,12 @@ object gameManager {
 			   		pad.fillTileMap()							        			 // Llenar el pad.
 					pad.drawPad()								         			 // Dibujo el pad.	
 					game.removeVisual(controlText)									 // Remover texto.
-					game.removeVisual(insertCointText)								 // Remover texto.							 
+					game.removeVisual(insertCointText)								 // Remover texto.	
+					game.addVisual(enemyCounter)
+					game.addVisual(lineUnit)									   	 // Contador de unidad de Aliens
+					lineUnit.checkChangeLine()										 // Chequeo de contador de unidad de aliens							
+					game.addVisual(lineDozens)										 // Contador de decena de Aliens
+					lineDozens.checkChangeLine()									 // Chequeo de contador de decena de aliens							 
 					self.fillAlienList(self.alienListA(),5, 31, "A")                 // Lleno la lista de aliens con cantidad y en una posicion en Y
 					self.drawAlienList(self.alienListA())				             // y la letra del Sprite, en este caso A.
 					self.fillAlienList(self.alienListB(),5, 27, "B")                 // Lleno la lista de aliens con cantidad y en una posicion en Y
