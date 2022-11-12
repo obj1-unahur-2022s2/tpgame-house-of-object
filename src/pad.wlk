@@ -17,16 +17,13 @@ object pad {
 												position = new Position(x=origin.x()+index, y=origin.y())
 			))
 		})
-	}
-	
-	// Borrar el pad.
-	method erasePad() {
-		tilesMap.forEach({ tile => game.removeVisual(tile) })
 	}	
 	// Dibujar el pad.
-	method drawPad() { tilesMap.forEach({tile => game.addVisual(tile) })
-	}	
-	
+	method drawPad() { if(!self.isVisible()) tilesMap.forEach({tile => game.addVisual(tile) })}	
+	// Borrar el pad.
+	method erasePad() {	if(self.isVisible()) tilesMap.forEach({ tile => game.removeVisual(tile) })}
+	// Verifico si es visible el pad
+	method isVisible() = tilesMap.any({tile => game.hasVisual(tile)})
 	// Mover izquierda el pad.
 	method MoveLeft() {
 		tilesMap.forEach({		

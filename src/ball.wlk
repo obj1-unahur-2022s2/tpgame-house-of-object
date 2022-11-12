@@ -1,5 +1,74 @@
 import wollok.game.*
-// import manager.*    	// Para audios.
+
+// Tile genérico base para armar la ball y el pad.
+class PieceTile {
+	var property color
+	var property position
+	var property image = color.image()
+}
+
+class Ball {
+	var property tile = new PieceTile(color=ball, position= new Position(x=8, y=7))	// Tile inicial de la bola
+	var property velocity = 1												// Velocidad de desplazamiento.
+	var property direction = new Vector2(x=1, y=2)   						// 45 grados x= 1 y= 1.
+	var property relativeX = 0						 						// Origen de la pieza en el mapa X.
+	var property relativeY = 0					  							// Origen de la pieza en el mapa Y.
+	var property offset = 5													// Offset para chocar con bordes de Arcade.
+	var property soundReboteBallEnPared = new Sound(file = "sonidoReboteBallConPared.mp3")	// Sonido de rebote con pared.
+	var property soundReboteBallEnPad = new Sound(file = "sonidoReboteBallConPad.mp3")		// Sonido de rebote con pad.
+	var sonidoDeReboreParedIsPLaying = false
+	
+	method restarPosition() {
+		tile.position(new Position(x=8, y=7))
+		direction = new Vector2(x=1, y=2)
+	}
+	
+	// Movimiento de la ball.
+	method movement() {
+		tile.position(new Position(x = tile.position().x() + (direction.x() * velocity), 
+								   y = tile.position().y() + (direction.y() * velocity)
+		))
+	}
+	
+	// Dibujar la ball.
+	method drawBall() {
+		if(!game.hasVisual(tile) && tile != null)game.addVisual(tile)
+	}
+	
+	// Colisión con bordes arriba, abajo, derecha e izquierda.
+	method CollisionWidthAndHeight() {
+		if(tile.position().x()  < 0 + offset  || tile.position().x() + offset >= game.width() - 1 ) {
+			direction.x(direction.x() * -1)
+		} 
+		
+		
+		if(tile.position().y() <= 0  || tile.position().y() >= game.height() - 1 - 1 - offset ) {
+			direction.y(direction.y() * -1)
+		}		
+		
+	}
+	
+	// Colision con ball. Hace que la ball cambie dirección en Y cuando choca con el pad o los aliens.
+	method collideWith(other) {
+		if(other.collideWith(self)) {
+			self.invertDirectionY()
+		}
+	}
+	
+	// Invierte la direccion en el eje Y. Se usa al chocar.
+	method invertDirectionY() {
+		direction.y(direction.y() * -1)
+	}
+	
+	method playRebote() {
+		if(sonidoDeReboreParedIsPLaying){
+				soundReboteBallEnPared.stop()
+				sonidoDeReboreParedIsPLaying = false
+			}
+			soundReboteBallEnPared.play()
+			sonidoDeReboreParedIsPLaying = true
+	}
+}
 
 // Set de objetos para obtener imágenes.
 object azul { method image() { return "tile_azul.png" } }
@@ -16,6 +85,10 @@ object pad_right { method image() { return "pad_right.png" } }
 object controlText { 
 	var property position = new Position(x = 9, y = 30 )
 	var property image = "controls_text.png"
+}
+object controlText2 { 
+	var property position = new Position(x = 9, y = 30 )
+	var property image = "control_text_2.png"
 }
 
 // Objeto con caja de texto de insert coin.
@@ -54,21 +127,35 @@ object youWin {
 	
 	// Animacion del texto.
 	method animation() {
-		game.onTick(800, "animacion de cartel", { self.changeFrame()})
+		game.onTick(800, "animacion de cartel win", { self.changeFrame()})
 	}	
 }
+
+// Objeto con caja de texto de play again.
+object playAgain{
+	var property position = new Position(x = 10, y = 30 )
+	var property image = "play_again.png"
+	
+	method changeFrame() {
+		if(image == "play_again.png") {
+			image = "text_insert_coin_black.png"
+		}
+		else {
+			image = "play_again.png"
+		}
+	}
+	
+	// Animacion del texto.
+	method animation() {
+		game.onTick(800, "animacion de cartel play again", { self.changeFrame()})
+	}	
+}
+
 
 // Objeto con caja de texto de you lost.
 object youLost {
 	var property position = new Position(x = 10, y = 20 )
 	var property image = "text_game_over.png"
-}
-
-// Tile genérico base para armar la ball y el pad.
-class PieceTile {
-	var property color
-	var property position
-	var property image = color.image()
 }
 
 // Vector para poder dar la dirección a la ball al momento de moverse.
@@ -82,62 +169,4 @@ class Vector2 {
 	// Normalización de un vector.
 	method normalized(tile) = new Vector2(x=x/self.magnitud(tile), y=x/self.magnitud(tile))
 	
-}
-
-class Ball {
-	var property tile = new PieceTile(color=ball, position= new Position(x=8, y=7))	// Tile inicial de la bola
-	var property velocity = 1												// Velocidad de desplazamiento.
-	var property direction = new Vector2(x=1, y=2)   						// 45 grados x= 1 y= 1.
-	var property relativeX = 0						 						// Origen de la pieza en el mapa X.
-	var property relativeY = 0					  							// Origen de la pieza en el mapa Y.
-	var property offset = 5													// Offset para chocar con bordes de Arcade.
-	var property soundReboteBallEnPared = new Sound(file = "sonidoReboteBallConPared.mp3")	// Sonido de rebote con pared.
-	var property soundReboteBallEnPad = new Sound(file = "sonidoReboteBallConPad.mp3")		// Sonido de rebote con pad.
-	var sonidoDeReboreParedIsPLaying = false
-	
-	// Movimiento de la ball.
-	method movement() {
-		tile.position(new Position(x = tile.position().x() + (direction.x() * velocity), 
-								   y = tile.position().y() + (direction.y() * velocity)
-		))
-	}
-	
-	// Dibujar la ball.
-	method drawBall() {
-		game.addVisual(tile)
-	}
-	
-	// Colisión con bordes arriba, abajo, derecha e izquierda.
-	method CollisionWidthAndHeight() {
-		if(tile.position().x()  < 0 + offset  || tile.position().x() + offset >= game.width() - 1 ) {
-			direction.x(direction.x() * -1)
-		} 
-		
-		
-		if(tile.position().y() <= 0  || tile.position().y() >= game.height() - 1 - 1 - offset ) {
-			direction.y(direction.y() * -1)
-		}		
-		
-	}
-	
-	// Colision con ball. Hace que la ball cambie dirección en Y cuando choca con el pad o los aliens.
-	method collideWith(other) {
-		if(other.collideWith(self)) {
-			self.invertDirectionY()
-		}
-	}
-	
-	// Invierte la direccion en el eje Y. Se usa al chocar.
-	method invertDirectionY() {
-		direction.y(direction.y() * -1)
-	}
-	
-	method playRebote() {
-		if(sonidoDeReboreParedIsPLaying){
-				soundReboteBallEnPared.stop()
-				sonidoDeReboreParedIsPLaying = false
-			}
-			soundReboteBallEnPared.play()
-			sonidoDeReboreParedIsPLaying = true
-	}
 }
