@@ -9,7 +9,7 @@ class Alien {
 	var property frame = 1								            // Cuadro de animacion inicial del alien.
 	var property image = "invader" + alienLetter + frame + ".png"	// Imagen inicial del alien en base a su cuadro inicial.
 	var property direction = 1										// Direccion inicial del movimiento del alien.
-	var property soundMuerteDeAlien = new Sound(file = "sonidoMuerteAlien.mp3")// Sonido de muerte de alien.
+	var property soundMuerteDeAlien = new Sound(file = "sonidoMuerteAlien.mp3")	// Sonido de muerte de alien.
 	var playSound = false
 	
 	// Dibujar el alien.
@@ -19,14 +19,15 @@ class Alien {
 	
 	// Borrar el alien.
 	method erase() {
-		game.removeVisual(self)									       // Remuevo el visual	
-		if(gameManager.inicio()){									   // Compruebo que este en el juego
-			gameManager.aliensCounter(gameManager.aliensCounter() - 1) // Resto un alien al contador de Aliens.
-			self.playDeadSound()									   // Reproduzco sonido de muerte
+		game.removeVisual(self)									       // Remuevo el visual.
+		if(gameManager.inicio()){									   // Compruebo que este en el juego.
+			gameManager.aliensCounter(gameManager.aliensCounter() - 1) // Resto un alien al contador de aliens.
+			self.playDeadSound()									   // Reproduzco sonido de muerte.
 		}	
 		
 	}
-	// Reproducir sonido de muerte
+	
+	// Reproducir sonido de muerte.
 	method playDeadSound(){
 		if(playSound){
 			soundMuerteDeAlien.stop()
@@ -34,7 +35,7 @@ class Alien {
 		}
 		soundMuerteDeAlien = new Sound(file = "sonidoMuerteAlien.mp3")
 		soundMuerteDeAlien.play()								   // Reproduccion de sonido de muerte. 			
-		playSound = true										   // Control de Reproduccion de sonido de muerte n true.			
+		playSound = true										   // Control de reproduccion de sonido de muerte en true.			
 	}
 	
 	// Movimiento del alien según su dirección.

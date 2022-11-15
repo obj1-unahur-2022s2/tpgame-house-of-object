@@ -1,11 +1,10 @@
 import wollok.game.*
-import ball.*
-import pad.*
 import alien.*
 import alienCounter.*
+import ball.*
+import pad.*
 
-object gameManager {
-		
+object gameManager {	
 	// Inicalizo lista de aliens de tipo A.
 	const property alienListA = []
 	// Inicalizo lista de aliens de tipo B.
@@ -18,22 +17,21 @@ object gameManager {
 	// Offset para chocar con los bordes del Arcade.
 	var property offset = 5
 	
-	const ball1 = new Ball() 							  				// Creo la ball.
-	var property inicio = false						      				// Atributo para inicio de juego.
+	const ball1 = new Ball() 						// Creo la ball.
+	var property inicio = false						// Atributo para inicio de juego.
 	var property replay = false	
 	var property lost = false
 	var property win = false	
 	var property changeText = true						
-	var property alienMovementTime = 800						  		// Tiempo del OnTick de las listas de aliens.
-	var property ballMovementTime = 150						  			// Tiempo de OnTick de la ball.
-	var property soundFondo 											// Sonido de fondo del juego.
+	var property alienMovementTime = 800			// Tiempo del OnTick de las listas de aliens.
+	var property ballMovementTime = 150				// Tiempo de OnTick de la ball.
+	var property soundFondo 						// Sonido de fondo del juego.
 	var property sounFondoIsPlay = false
-	var property soundVictoria 	// Sonido de victoria.
+	var property soundVictoria 						// Sonido de victoria.
 	var property soundVictoriaIsPLay = false
-	var property soundDerrota	// Sonido de derrota.
+	var property soundDerrota						// Sonido de derrota.
 	var property soundDerrotaIsPlay = false
-	var property aliensCounter = 0 										// Contador de Aliens.
-	
+	var property aliensCounter = 0 					// Contador de aliens.
 	
 	// Chequeo de colision de los aliens con la ball.
 	method collisionAliensWith(aBall, lista) {
@@ -45,18 +43,21 @@ object gameManager {
 						 })
 		} 	
 	}	
+	
 	// Lleno lista de aliens.
 	method fillAlienList(list, count, yPos, letter) {
 		(0..count - 1).forEach({
 			index => list.add(new Alien(position=new Position(x= offset + index*alienOfset, y=yPos), alienLetter=letter))
 		})
 	}
+	
 	// Dibujo lista de aliens.
 	method drawAlienList(list) {
 		list.forEach({
 			alien => alien.draw()
 		})
 	}
+	
 	// Borro la lista de aliens
 	method eraseAlienList(list) {
 		list.forEach({
@@ -64,24 +65,28 @@ object gameManager {
 		})
 		list.clear()
 	}
+	
 	// Cambio frame de cada alien de la lista.
 	method changeFrameAlien(list, fameLetter) {
 		list.forEach({
 			alien => alien.changeFrame(fameLetter)
 		})
 	}
+	
 	// Mover los aliens hacia abajo.
 	method moveDown(list) {
 		list.forEach({
 			alien => alien.moveDown()
 		})
 	}
+	
 	// Mover los aliens de forma horizontal segun su dirección.
 	method moveHorizontal(list) {
 		list.forEach({
 			alien => alien.moveHorizontal()
 		})
 	}
+	
 	// Cambiar la direccion de los aliens.
 	method changeDirection(list) {
 		list.forEach({
@@ -110,31 +115,34 @@ object gameManager {
     	soundFondo.play()									// Reproducción de sonido.
     	sounFondoIsPlay = true
 	}
-	// Detener audio general
+	
+	// Detener audio general.
 	method stopSoundFondo() {
-		soundFondo.shouldLoop(false)                      	// El tema se repite en loop.
-    	soundFondo.stop()									// Reproducción de sonido.
+		soundFondo.shouldLoop(false)                      	
+    	soundFondo.stop()									
     	sounFondoIsPlay = false
 	}
-	// Sonido win
-	method playWinSound(){
-		if(soundVictoriaIsPLay){
+	
+	// Sonido win.
+	method playWinSound() {
+		if(soundVictoriaIsPLay) {
 			soundVictoria.stop()
 			soundVictoriaIsPLay = false
 		}
 		soundVictoria = new Sound(file = "sonidoVictoria.mp3")
-		soundVictoria.play()								               // Reproduccion de sonido de victoria. 			
-		soundVictoriaIsPLay = true										   // Control de Reproduccion de sonido de victoria n true.			
+		soundVictoria.play()				// Reproduccion de sonido de victoria. 			
+		soundVictoriaIsPLay = true			// Control de reproduccion de sonido de victoria en true.			
 	}
-	// Sonido lost
-	method playLostSound(){
-		if(soundDerrotaIsPlay){
+	
+	// Sonido lost.
+	method playLostSound() {
+		if(soundDerrotaIsPlay) {
 			soundDerrota.stop()
 			soundDerrotaIsPlay = false
 		}
 		soundDerrota  = new Sound(file = "sonidoDerrota.mp3")
-		soundDerrota.play()								                   // Reproduccion de sonido de derrota. 			
-		soundDerrotaIsPlay = true										   // Control de Reproduccion de sonido de derrota n true.			
+		soundDerrota.play()					// Reproduccion de sonido de derrota. 			
+		soundDerrotaIsPlay = true			// Control de reproduccion de sonido de derrota en true.			
 	}
 
 	// Condicion de victoria.
@@ -150,7 +158,7 @@ object gameManager {
 			replay = true
 			win = true
 			lost = false
-			// remuevo visual de la bola
+			// Remuevo visual de la ball.
 			game.removeVisual(ball1.tile())
 			// Agrego cartel de ganador.
 			game.addVisual(youWin)			// Cartel de winner.	
@@ -190,7 +198,7 @@ object gameManager {
 			lost = true
 			win  = false
 			// Agrego cartel de perdedor.
-			game.addVisual(youLost)			// Cartel de perdedor. Cambiar por game.addVisual(youLost).
+			game.addVisual(youLost)			// Cartel de perdedor.
 			game.addVisual(playAgain)
 			playAgain.animation()
 			self.stopSoundFondo()			// Freno de música de fondo.
@@ -198,9 +206,12 @@ object gameManager {
 			self.stopUpdate()			
 		}
 	}
-	// Suma de size de listas
+	
+	// Suma de size de listas.
 	method counterSize() = self.alienListA().size() + self.alienListB().size() + self.alienListC().size()
+	
 	/////////////////////////////////////////////////////////////////////////////////////////////////////////////
+	
 	method checkVisualselementsToRemove() {
 		if(game.hasVisual(controlText)){game.removeVisual(controlText)}
 		if(game.hasVisual(insertCointText)){game.removeVisual(insertCointText)}
@@ -221,7 +232,9 @@ object gameManager {
 			lost = false
 		}  			
 	}
+	
 	//////////////////////////////////////////////////////////////////////////////////////////////////////////////playAgain
+	
 	// Condiciones básicas e inicio de juego.
 	method play() {
 		// Pantalla de inicio y  seteo inicial de atributos del tablero del juego.
@@ -234,7 +247,7 @@ object gameManager {
 		game.addVisual(insertCointText) 					  // Texto de insert coin.
 		pad.fillTileMap() 									  // Llenar el pad.		
 		insertCointText.animation() 						  // Animacion de insert coin.
-		keyboard.e().onPressDo({game.stop()})				  // Salir
+		keyboard.e().onPressDo({game.stop()})				  // Salir.
 		keyboard.num2().onPressDo({ballMovementTime = 70 alienMovementTime = 500 self.controlTextChange()})	      // Dificulta
 		keyboard.num3().onPressDo({ballMovementTime = 150 alienMovementTime = 800 self.controlTextChange()})	  // Dificulta
 		keyboard.num1().onPressDo({ // Al presionar 1 comienza el juego. 
@@ -246,12 +259,12 @@ object gameManager {
 				ball1.restarPosition()			   		
 				if(pad.tilesMap() != null)pad.drawPad() 						// Dibujo el pad.					
 				game.addVisual(enemyCounter)
-				game.addVisual(lineUnit) 										// Contador de unidad de Aliens
-				lineUnit.checkChangeLine() 										// Chequeo de contador de unidad de aliens							
-				game.addVisual(lineDozens)									    // Contador de decena de Aliens
-				lineDozens.checkChangeLine() 									// Chequeo de contador de decena de aliens							 
+				game.addVisual(lineUnit) 										// Contador de unidad de aliens.
+				lineUnit.checkChangeLine() 										// Chequeo de contador de unidad de aliens.							
+				game.addVisual(lineDozens)									    // Contador de decena de aliens.
+				lineDozens.checkChangeLine() 									// Chequeo de contador de decena de aliens.							 
 				self.fillAndDrawAllAliensLists()
-				// Movimiento de los aliens
+				// Movimiento de los aliens.
 				game.onTick(alienMovementTime, "alien updateA", {if (inicio){self.aliensBehavior(self.alienListA(), "A")}}) // Movimiento en un cierto tiempo lista e indice de Alien A
 				game.onTick(alienMovementTime, "alien updateB", {if (inicio){self.aliensBehavior(self.alienListB(), "B")}}) // Movimiento en un cierto tiempo lista e indice de Alien B
 				game.onTick(alienMovementTime, "alien updateC", {if (inicio){self.aliensBehavior(self.alienListC(), "C")}}) // Movimiento en un cierto tiempo lista e indice de Alien C
@@ -262,7 +275,9 @@ object gameManager {
 		self.keyBoardArrowControl()                       // Manejo de teclas de pad juego.	
 		game.start()									  // Inicio del programa.	
 	}
+	
 	/////////////////////////////////////////////////////////////////////////////////////////////
+	
 	method controlTextChange() {
 		if(changeText){
 			game.removeVisual(controlText)
@@ -270,9 +285,12 @@ object gameManager {
 			changeText = false
 		}
 		
-	}	//////////////////////////////////////////////////////////////////////////////////////////////
+	}	
+	
+	//////////////////////////////////////////////////////////////////////////////////////////////
+	
 	method update() {
-		// Game Update	Muevo bola en un lapso de tiempo.
+		// Game Update. Muevo ball en un lapso de tiempo.
 		game.onTick(ballMovementTime, "game update", { if (inicio) {
 				ball1.movement()								    // Muevo ball.
 				ball1.CollisionWidthAndHeight() 					// Chequeo colision con bordes. 
@@ -285,7 +303,9 @@ object gameManager {
 			}
 		})
 	}
+	
 	////////////////////////////////////////////////////////////////////////////////////////////////
+	
 	method stopUpdate() {
 		game.removeTickEvent("game update")
 		game.removeTickEvent("alien updateA")
@@ -293,12 +313,16 @@ object gameManager {
 		game.removeTickEvent("alien updateC")		
 		
 	}
+	
 	////////////////////////////////////////////////////////////////////////////////////////////////
+	
 	method keyBoardArrowControl() {
 		keyboard.left().onPressDo({ if(pad.isVisible()) pad.MoveLeft()if (pad.CollisionWidth()) pad.MoveRight()	})
 		keyboard.right().onPressDo({ if(pad.isVisible()) pad.MoveRight()if (pad.CollisionWidth()) pad.MoveLeft()})
 	}
+	
 	////////////////////////////////////////////////////////////////////////////////////////////////
+	
 	method fillAndDrawAllAliensLists() {
 		self.fillAlienList(self.alienListA(), 5, 31, "A") 		// Lleno la lista de aliens con cantidad y en una posicion en Y
 		self.drawAlienList(self.alienListA()) 					// y la letra del Sprite, en este caso A.
@@ -306,7 +330,6 @@ object gameManager {
 		self.drawAlienList(self.alienListB()) 					// y la letra del Sprite, en este caso B.
 		self.fillAlienList(self.alienListC(), 5, 23, "C") 		// Lleno la lista de aliens con cantidad y en una posicion en Y
 		self.drawAlienList(self.alienListC()) 					// y la letra del Sprite, en este caso C.
-		self.aliensCounter(self.counterSize()) 					// Seteo la cantidad de aliens
+		self.aliensCounter(self.counterSize()) 					// Seteo la cantidad de aliens.
 	}
-	
 }

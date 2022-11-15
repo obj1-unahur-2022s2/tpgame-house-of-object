@@ -1,5 +1,5 @@
-import manager.*   
-import wollok.game.*
+  import wollok.game.*
+  import manager.* 
 
 object enemyCounter {
 	var property index = 0

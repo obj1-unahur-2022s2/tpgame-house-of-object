@@ -8,7 +8,7 @@ class PieceTile {
 }
 
 class Ball {
-	var property tile = new PieceTile(color=ball, position= new Position(x=8, y=7))	// Tile inicial de la bola
+	var property tile = new PieceTile(color=ball, position= new Position(x=8, y=7))	// Tile inicial de la bola.
 	var property velocity = 1												// Velocidad de desplazamiento.
 	var property direction = new Vector2(x=1, y=2)   						// 45 grados x= 1 y= 1.
 	var property relativeX = 0						 						// Origen de la pieza en el mapa X.
@@ -39,13 +39,10 @@ class Ball {
 	method CollisionWidthAndHeight() {
 		if(tile.position().x()  < 0 + offset  || tile.position().x() + offset >= game.width() - 1 ) {
 			direction.x(direction.x() * -1)
-		} 
-		
-		
+		} 	
 		if(tile.position().y() <= 0  || tile.position().y() >= game.height() - 1 - 1 - offset ) {
 			direction.y(direction.y() * -1)
-		}		
-		
+		}			
 	}
 	
 	// Colision con ball. Hace que la ball cambie dirección en Y cuando choca con el pad o los aliens.
@@ -150,7 +147,6 @@ object playAgain{
 		game.onTick(800, "animacion de cartel play again", { self.changeFrame()})
 	}	
 }
-
 
 // Objeto con caja de texto de you lost.
 object youLost {
